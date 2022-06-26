@@ -114,3 +114,87 @@
     flex-direction: column;
   }
 }
+/* For Traffic Light App*/
+.pole {
+  background-color: black;
+  border: 3px solid #636262;
+  border-radius: 10px;
+  width: 100px;
+  height: 25vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.trafficBody {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.trafficLight {
+  border-radius: 15px;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+.light {
+  width: 64px;
+  height: 64px;
+  border-radius: 100%;
+  margin-bottom: 10px;
+  opacity: 0.5;
+}
+
+.yellow {
+  background-color: #ffff00;
+}
+
+.green {
+  background-color: #4cbb17;
+}
+
+.red {
+  background-color: #e60000;
+}
+
+.input {
+  appearance: none;
+}
+
+.input:checked{
+  opacity: 1;
+}
+
+/* For Tic Tac Toe */
+
+.boardRow {
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+}
+
+.boardColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+}
+
+.square {
+  width: 200px;
+  height: 200px;
+  background: grey;
+  border: 1px solid;
+  padding: 0;
+}
+
+.resetButton {
+  padding: 20px;
+}
