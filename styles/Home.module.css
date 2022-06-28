@@ -1,5 +1,8 @@
 .container {
   padding: 0 2rem;
+  display: flex;
+  text-align: center;
+  justify-content: center;
 }
 
 .main {
@@ -114,6 +117,7 @@
     flex-direction: column;
   }
 }
+
 /* For Traffic Light App*/
 .pole {
   background-color: black;
@@ -174,27 +178,36 @@
 }
 
 /* For Tic Tac Toe */
+.boardGrid {
+  display: grid;
+  height: 50vmin;
+  width: 50vmin;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-gap: 0.5rem;
 
-.boardRow {
-  display: flex;
-  flex-direction: row;
-  gap: 0px;
 }
 
-.boardColumn {
-  display: flex;
-  flex-direction: column;
-  gap: 0px;
+.subtitle {
+  font-size: 50px;
+}
+
+.smalltitle {
+  font-size: 30px;
 }
 
 .square {
-  width: 200px;
-  height: 200px;
-  background: grey;
-  border: 1px solid;
-  padding: 0;
+  font-size: 40px;
+  border-radius: 0.5rem;
+  background: rgb(187, 187, 187);
+  box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.05);
 }
 
 .resetButton {
-  padding: 20px;
+  margin-top: 2rem;
+  height: 2rem;
+  width: 3.5rem;
+  background-color: rgb(146, 146, 146);
+  color: white;
+  border-radius: 0.5rem;
 }
