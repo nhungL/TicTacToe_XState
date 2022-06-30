@@ -4,7 +4,8 @@ const initialContext = {
   board: Array(9).fill(""),
   moves: 0,
   player: "X",
-  winner: ""
+  winner: "",
+  winning: Array(3).fill(""),
 };
 function generateWinningLines (input: number) {
   const array = new Array(input*input).fill(0).map((_,i) => i )
@@ -47,11 +48,11 @@ export const ticTacToeMachine = createMachine(
     context: initialContext,
     states: {
       playing: {
+        "always": [
+          { target: "winner", cond: "checkWin" },
+          { target: "draw", cond: "checkDraw" }
+        ],
         on: {
-          "": [
-            { target: "winner", cond: "checkWin" },
-            { target: "draw", cond: "checkDraw" }
-          ],
           PLAY: [
             {
               target: "playing",
@@ -62,7 +63,7 @@ export const ticTacToeMachine = createMachine(
         }
       },
       winner: {
-        entry: "setWinner"
+        entry: ["setWinner", "setWinningLine"]
       },
       draw: {}
     },
@@ -89,7 +90,12 @@ export const ticTacToeMachine = createMachine(
       setWinner: assign({
         winner: (ctx) => (
           ctx.player === "X" ? "O" : "X"
-        )
+        ),
+      }),
+      setWinningLine: assign({
+        winner: (ctx) => (
+          ctx.player === "X" ? "O" : "X"
+        ),
       })
     },
     guards: {
@@ -98,34 +104,38 @@ export const ticTacToeMachine = createMachine(
 
         //all possible lines to win
         const winningLines = generateWinningLines(Math.sqrt(ctx.board.length));
-        console.log({winningLines})
-
+        // console.log({winningLines})
+        var xWon = true;
         for (let line of winningLines) {
-          //check if X wins
-          const xWon = line.every((index) => {
-            if (ctx.board[index] != "X" ) {
-              // console.log("X not win yet");
-              return false;
+          var xWon = true;
+          var oWon = true;
+          for (let index of line) {
+            if (ctx.board[index] == "X"){
+              continue;
             }
-            else { return true }
-
-          });
-          //check if O wins
-          const oWon = line.every((index) => {
-            if (ctx.board[index] != "O") {
-              // console.log("O not win yet");
-              return false;
+            else{
+              xWon = false;
+              break;
             }
-            else { return true }
-          });
+          }
 
-          //check if X or O wins
-          if (xWon || oWon) {
-            console.log("X or O WON")
-            return true
+          for (let index of line) {
+            if (ctx.board[index] == "O"){
+              continue;
+            }
+            else{
+              oWon = false;
+              break;
+            }
+          }
+
+          if (xWon || oWon){
+            ctx.winning = line;
+            console.log("winning", ctx.winning)
+            return true;
           }
         }
-        return false
+        return false;
       },
       checkDraw: (ctx) => {
         // return false

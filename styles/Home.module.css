@@ -3,6 +3,17 @@
   display: flex;
   text-align: center;
   justify-content: center;
+  background-color: #fff;
+  background-image: linear-gradient(
+      90deg,
+      transparent 79px,
+      #abced4 79px,
+      #abced4 81px,
+      transparent 81px
+    ),
+    linear-gradient(#eee 0.1em, transparent 0.1em);
+  background-size: 100% 1.2em;
+  font-family: Palatino, "Palatino Linotype", serif;
 }
 
 .main {
@@ -173,23 +184,33 @@
   appearance: none;
 }
 
-.input:checked{
+.input:checked {
   opacity: 1;
 }
 
 /* For Tic Tac Toe */
+.wrapper {
+  position: relative;
+}
+
 .boardGrid {
   display: grid;
   height: 50vmin;
   width: 50vmin;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  grid-gap: 0.5rem;
+}
 
+.svg{
+  text-align: left;
+  position: absolute;
+  width: -webkit-fill-available;
+  height: -webkit-fill-available;
 }
 
 .subtitle {
-  font-size: 50px;
+  font-size: 2rem;
+  margin-top: 0;
 }
 
 .smalltitle {
@@ -197,17 +218,100 @@
 }
 
 .square {
-  font-size: 40px;
-  border-radius: 0.5rem;
-  background: rgb(187, 187, 187);
-  box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.05);
+  font-size: xxx-large;
+  border: solid 1px black;
+  background-color: transparent;
+  font-family: cursive;
+  padding: 0;
+  /* border-radius: 0.5rem; */
+  /* background: rgb(187, 187, 187); */
+  /* box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.05); */
+}
+
+.square:first-child,
+.square:nth-child(2),
+.square:nth-child(3) {
+  border-top: none;
+}
+
+.square:nth-child(1),
+.square:nth-child(4),
+.square:nth-child(7) {
+  border-left: none;
+}
+
+.square:nth-child(7),
+.square:nth-child(8),
+.square:nth-child(9) {
+  border-bottom: none;
+}
+
+.square:nth-child(3),
+.square:nth-child(6),
+.square:nth-child(9) {
+  border-right: none;
+}
+
+.squareHighLight {
+  font-size: xxx-large;
+  border: solid 1px black;
+  background-color: transparent;
+  font-family: cursive;
+  /* color: #e60000; */
+  animation: pulse 5s ;
+  /* background-image: linear-gradient(
+      90deg,
+      transparent 79px,
+      #abced4 79px,
+      #abced4 81px,
+      transparent 81px
+    ),
+    linear-gradient(#eee 0.1em, transparent 0.1em); */
+}
+
+@keyframes pulse {
+  0% {
+    background-color: rgb(230, 93, 93);
+  }
+}
+
+.squareHighLight:first-child,
+.squareHighLight:nth-child(2),
+.squareHighLight:nth-child(3) {
+  border-top: none;
+}
+
+.squareHighLight:nth-child(1),
+.squareHighLight:nth-child(4),
+.squareHighLight:nth-child(7) {
+  border-left: none;
+}
+
+.squareHighLight:nth-child(7),
+.squareHighLight:nth-child(8),
+.squareHighLight:nth-child(9) {
+  border-bottom: none;
+}
+
+.squareHighLight:nth-child(3),
+.squareHighLight:nth-child(6),
+.squareHighLight:nth-child(9) {
+  border-right: none;
+}
+
+.lineHorizontal {
+   stroke:red;
+   stroke-linecap: round;
+   stroke-width: 8;
 }
 
 .resetButton {
   margin-top: 2rem;
-  height: 2rem;
-  width: 3.5rem;
-  background-color: rgb(146, 146, 146);
-  color: white;
+  height: 2.7rem;
+  width: 4.5rem;
+  background-color: rgb(187, 187, 187);
+  color: black;
   border-radius: 0.5rem;
+  font-family: "Shadows Into Light", cursive;
+  font-size: x-large;
 }
