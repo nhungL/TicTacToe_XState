@@ -1,6 +1,3 @@
-import { generateWinningLines } from "../machines/ticTacToeMachine";
-
-
 //function to create n squares
 export function range(start: number, end: number) {
     return Array(end - start)
@@ -95,3 +92,37 @@ export function minimax(board: any[], depth: number, isMaximizing: boolean) {
         return bestScore;
     }
 }
+
+export function generateWinningLines(input: number) {
+    const array = new Array(input * input).fill(0).map((_, i) => i)
+    var res = [];
+    var lineRow = new Array(input)
+    for (let i = 0; i < input * input; i += input) {
+      lineRow = array.slice(i, i + input)
+      res.push(lineRow)
+    }
+  
+    for (let i = 0; i < input; i += 1) {
+      var lineCol = []
+      for (let j = i; j < input * input; j += input) {
+        lineCol.push(j)
+      }
+      res.push(lineCol)
+  
+      if (i == 0) {
+        var lineDiagonal = []
+        for (let k = i; k < input * input; k += (input + 1)) {
+          lineDiagonal.push(k)
+        }
+        res.push(lineDiagonal)
+      }
+      if (i == input - 1) {
+        var lineDiagonal = []
+        for (let k = i; k <= input * (input - 1); k += i) {
+          lineDiagonal.push(k)
+        }
+        res.push(lineDiagonal)
+      }
+    }
+    return res;
+  }
