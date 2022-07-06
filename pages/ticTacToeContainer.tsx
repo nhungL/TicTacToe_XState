@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
-import React, { useContext, useEffect, useRef } from "react";
+import React from "react";
 import styles from "../styles/Home.module.css";
-import { useInterpret, useMachine } from "@xstate/react";
+import { useInterpret } from "@xstate/react";
 import {
   ticTacToeMachine,
   ticTacToeModel,
@@ -12,10 +12,9 @@ import styled from "styled-components";
 import { interpret } from "xstate";
 import { waitFor } from "xstate/lib/waitFor";
 import { useSelector } from "@xstate/react";
-import TicTacToe from "./hooks/ticTacToe";
+import TicTacToe from "../component/ticTacToe";
 
 const ticTacToeContainer: NextPage = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
   const authService = useInterpret(ticTacToeMachine, {
     context: ticTacToeModelContext,
   });
