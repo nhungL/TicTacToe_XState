@@ -1,11 +1,11 @@
 import type { NextPage } from "next";
-import React, { Dispatch, useContext } from "react";
-import styles from "../../styles/Home.module.css";
-import { useMachine, useSelector } from "@xstate/react";
+import React, { useContext } from "react";
+import styles from "../styles/Home.module.css";
+import { useSelector } from "@xstate/react";
 import {
   ticTacToeMachine, ticTacToeModelContext, TTTContext,
-} from "../../machines/ticTacToeMachine";
-import * as helper from "../../helper/mainFunctions";
+} from "../machines/ticTacToeMachine";
+import * as helper from "../helper/mainFunctions";
 
 const ticTacToe: NextPage = () => {
   const {service} = useContext(TTTContext);
