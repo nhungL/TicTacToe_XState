@@ -17,16 +17,13 @@ import TicTacToe from "../component/ticTacToe";
 const ticTacToeContainer: NextPage = () => {
   const authService = useInterpret(ticTacToeMachine, {
     context: ticTacToeModelContext,
+  }).onTransition((state) => {
+    console.log(state.value)
+    if (state.matches("playing")){
+      console.log("SUCCESS!");
+    }
   });
   console.log(authService)
-  // authService.start();
-  // const { service } = useContext(ticTacToeModelContext)
-  // const { send: dispatch } = authService;
-  // const boardSize = useSelector(authService, (state) => {
-  //   return state.context.size;
-  // });
-  // console.log(boardSize);
-  // console.log(size);
 
   return (
     <div>

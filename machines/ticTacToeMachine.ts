@@ -1,11 +1,11 @@
-// import { createContext, isContext } from "vm";
-import { assign, AnyEventObject, Interpreter, EventFrom } from "xstate";
+import { assign, AnyEventObject, Interpreter, EventFrom, ResolveTypegenMeta, TypegenDisabled, BaseActionObject, ServiceMap, createSchema } from "xstate";
 import { createModel } from 'xstate/lib/model';
 import { createContext } from 'react'
 import { generateWinningLines } from "../helper/mainFunctions";
 
+
 //Context
-export const ticTacToeModelContext =  {
+export const ticTacToeModelContext = {
   size: 0,
   board: Array(),
   moves: 0,
@@ -14,29 +14,49 @@ export const ticTacToeModelContext =  {
   winning: Array(),
 };
 export interface ITTTContext {
-	service: Interpreter<typeof ticTacToeModelContext, any, EventFrom<typeof ticTacToeMachine>, any>
+  service: Interpreter<
+    typeof ticTacToeModelContext,
+    any,
+    EventFrom<typeof ticTacToeMachine>,
+    any,
+    any>
 }
 export const TTTContext = createContext({} as ITTTContext)
 
 //Events
 export const ticTacToeModelEvents = {
+  // events: {} as TTTEvents
   events: {
     '': () => ({}), // empty
-    INITIALIZE: () => ({}),
-    PLAY: () => ({}),
-    RESET: () => ({})
+    INITIALIZE: (value: number) => ({ value }),
+    PLAY: (index: number) => ({ index }),
+    winner: () => ({}),
+    RESET: () => ({}),
   }
 };
 
-export const ticTacToeModel = createModel(ticTacToeModelContext);
+// export type TTTEvents =
+//   | { type: "INITIALIZE"; value: number }
+//   | { type: "RESET" }
+//   | { type: "PLAY"; index: number }
+//   | { type: "winner" }
+
+
+
+export const ticTacToeModel = createModel(ticTacToeModelContext, ticTacToeModelEvents);
+// export const ticTacToeModel = createModel(ticTacToeModelContext);
 export const ticTacToeMachine = ticTacToeModel.createMachine(
   {
     id: "tictactoe",
+    schema: {
+      context: {} as typeof ticTacToeModelContext,
+      // events: {} as UnionFromCreatorsReturnTypes<FinalEventCreators<typeof ticTacToeModelEvents>>,
+    },
+    preserveActionOrder: true,
     context: ticTacToeModel.initialContext,
     initial: "waiting",
     states: {
       waiting: {
-        // entry: ["assignSize"],
         on: {
           INITIALIZE: { target: "playing", actions: ["assignSize", "initialBoard"] }
         }
@@ -51,7 +71,7 @@ export const ticTacToeMachine = ticTacToeModel.createMachine(
             {
               target: "playing",
               cond: "isValidMove",
-              actions: "updateBoard"
+              actions: "updateBoard",
             }
           ]
         }
@@ -62,21 +82,18 @@ export const ticTacToeMachine = ticTacToeModel.createMachine(
       draw: {}
     },
     on: {
-      RESET: {
-        target: "waiting",
-        actions: "resetGame"
-      }
+      RESET: { target: "waiting", actions: "resetGame" }
     }
   },
   {
     actions: {
-      assignSize: assign({
+      assignSize: ticTacToeModel.assign({
         size: (ctx, event: AnyEventObject) => {
-          console.log("in update size board", {event});
+          console.log("in update size board", { event });
           return ctx.size = event.value
         },
       }),
-      initialBoard: assign({
+      initialBoard: ticTacToeModel.assign({
         board: (ctx) => {
           console.log("in initialize board");
           let initialBoard = Array(ctx.size * ctx.size).fill("");
@@ -87,7 +104,7 @@ export const ticTacToeMachine = ticTacToeModel.createMachine(
           return ctx.winning = Array(ctx.size).fill("");
         },
       }),
-      updateBoard: assign({
+      updateBoard: ticTacToeModel.assign({
         board: (context, event: AnyEventObject) => {
           const updatedBoard = [...context.board];
           console.log("in update board", event.value);
@@ -97,13 +114,13 @@ export const ticTacToeMachine = ticTacToeModel.createMachine(
         moves: (context) => context.moves + 1,
         player: (context) => (context.player === "X" ? "O" : "X")
       }),
-      resetGame: assign(ticTacToeModel.initialContext),
-      setWinner: assign({
+      resetGame: ticTacToeModel.assign(ticTacToeModel.initialContext),
+      setWinner: ticTacToeModel.assign({
         winner: (ctx) => (
           ctx.player === "X" ? "O" : "X"
         ),
       }),
-      setWinningLine: assign({
+      setWinningLine: ticTacToeModel.assign({
         winner: (ctx) => (
           ctx.player === "X" ? "O" : "X"
         ),

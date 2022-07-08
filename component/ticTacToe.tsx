@@ -1,17 +1,23 @@
-import type { NextPage } from "next";
+// import type { NextPage } from "next";
 import React, { useContext } from "react";
 import styles from "../styles/Home.module.css";
 import { useSelector } from "@xstate/react";
 import {
-  ticTacToeMachine, ticTacToeModelContext, TTTContext,
+  ticTacToeMachine,
+  ticTacToeModelContext,
+  TTTContext,
 } from "../machines/ticTacToeMachine";
 import * as helper from "../helper/mainFunctions";
+import styled from "styled-components";
 
-const ticTacToe: NextPage = () => {
-  const {service} = useContext(TTTContext);
-  service.start()
+const ticTacToe = () => {
+  const { service } = useContext(TTTContext);
+  console.log(service);
+  service.start();
 
-  const currState = useSelector(service, (state) => {return state.value;})
+  const currState = useSelector(service, (state) => {
+    return state.value;
+  });
   const boardSizeSelector = (state: any) => state.context.board.length;
   const boardSize = useSelector(service, boardSizeSelector);
   const playerSelector = (state: any) => state.context.player;
@@ -25,7 +31,6 @@ const ticTacToe: NextPage = () => {
   const winningLine = useSelector(service, (state) => {
     return state.context.winning;
   });
-
 
   // choose size
   const handleSelectBoardSize = () => {
@@ -48,7 +53,7 @@ const ticTacToe: NextPage = () => {
             <select id="select1" className={styles.option}>
               <option value="0">Select</option>
               <option value="3">3x3</option>
-              {/* <option value="5">5x5</option> */}
+              <option value="5">5x5</option>
             </select>
             <button className={styles.option} onClick={handleSelectBoardSize}>
               PLAY
@@ -58,16 +63,12 @@ const ticTacToe: NextPage = () => {
       );
     }
     if (currState == "playing") {
-      return (
-        <p className={styles.subtitle}>Your turn: {player}</p>
-      );
+      return <p className={styles.subtitle}>Your turn: {player}</p>;
     }
     if (currState == "winner") {
       return (
         <div>
-          <p className={styles.subtitle}>
-            Congrats! {winner} wins
-          </p>
+          <p className={styles.subtitle}>Congrats! {winner} wins</p>
           <p className={styles.smalltitle}>Click reset button to play again</p>
         </div>
       );
@@ -115,13 +116,12 @@ const ticTacToe: NextPage = () => {
       );
     } else {
       // Player X
-      if (service.state.context.player == "X") {
-        let value = helper.bestMove(service.state);
-        console.log({ value });
-        
+      if (player == "X") {
+        let value = helper.bestMove(board);
+        // console.log({ value });
         //update board with index chosen from bestMove();
         if (props.value == value) {
-          service.send( "PLAY", {value: value });
+          service.send("PLAY", { value: value });
           return (
             <button className={styles.square} id="ai">
               {board[props.value]}
@@ -129,19 +129,16 @@ const ticTacToe: NextPage = () => {
           );
         }
         return normalSquare(props);
-      }
-      // player O
-      else {
+      } else {
+        // player O
         return normalSquare(props);
       }
     }
   }
 
   const renderBoard = helper.range(0, boardSize).map((i) => {
-    console.log("in renderBoard")
-    return (
-      <Square key={i} value={i} win={winner !== ""} />
-    );
+    console.log("in renderBoard");
+    return <Square key={i} value={i} win={winner !== ""} />;
   });
 
   // main page
@@ -152,23 +149,6 @@ const ticTacToe: NextPage = () => {
         <div>{renderTitle()}</div>
         {boardSize != 0 && (
           <div className={styles.wrapper}>
-            {/* {current.context.winner != "" && (
-            <div className={styles.svg}>
-              <svg
-                className={styles.svg}
-                viewBox="0 0 500 500"
-                preserveAspectRatio="xMidYMid slice"s
-              >
-                <line
-                  className={styles.lineHorizontal}
-                  x1={x1}
-                  y1={y1}
-                  x2={x2}
-                  y2={y2}
-                />
-              </svg>
-            </div>
-          )} */}
             <div className={styles.boardGrid}>{renderBoard}</div>
           </div>
         )}

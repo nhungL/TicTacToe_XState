@@ -5,14 +5,14 @@ export function range(start: number, end: number) {
         .map((_, i) => i + start);
 }
 
-export function bestMove(current: any) {
+export function bestMove(board: any) {
     let bestScore = -Infinity;
     let move;
-    let board = current.context.board;
+    // let board = current.context.board;
     for (let idx = 0; idx < board.length; idx++) {
         if (board[idx] == "") {
             board[idx] = "X";
-            let score = minimax(current.context.board, 0, false);
+            let score = minimax(board, 0, false);
             board[idx] = "";
             if (score > bestScore) {
                 bestScore = score;
@@ -63,7 +63,6 @@ let scores: Record<string, number> = {
 
 export function minimax(board: any[], depth: number, isMaximizing: boolean) {
     let res = checkWinner(board);
-    console.log({ res })
     if (res !== null) {
         return scores[res];
     }
