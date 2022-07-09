@@ -65,36 +65,6 @@ const ticTacToe: NextPage = () => {
     }
   }
 
-  //Winning Line
-  // var x1 = 70.45454406738281;
-  // var y1 = 534.5;
-  // var x2 = 422.5;
-  // var y2 = 816.5;
-  // var x1 = 0;
-  // var y1 = 0;
-  // var x2 = 0;
-  // var y2 = 0;
-  // function getCoordinates() {
-  //   var el = document.getElementById("button");
-  //   if (el) {
-  //     if (x1 == 0 && y1 == 0 && x2 == 0 && y2 == 0) {
-  //       // x1 =
-  //       //   (el?.getBoundingClientRect().bottom - el?.getBoundingClientRect().top) *
-  //       //   0.5;
-  //       x1 = el?.offsetLeft + el?.offsetWidth / 2;
-  //       y1 = el?.offsetTop + el?.offsetHeight / 2;
-  //       x2 = el?.offsetLeft + el?.offsetWidth / 2;
-  //       y2 = el?.offsetTop + el?.offsetHeight / 2;
-  //     } else {
-  //       x2 = el?.offsetLeft + el?.offsetWidth / 2;
-  //       y2 = el?.offsetTop + el?.offsetHeight / 2;
-  //     }
-  //   }
-  //   console.log({ x1, y1 });
-  //   console.log({ x2, y2 });
-  //   return [x1, x2, y1, y2];
-  // }
-
   //variables in square
   interface SquareProps {
     value: number;
@@ -117,6 +87,7 @@ const ticTacToe: NextPage = () => {
 
   //create a square with value passed to machine
   let win = false;
+  const winningLines = helper.generateWinningLines(Math.sqrt(current.context.size))[0]
   function Square(props: SquareProps) {
     // check winner
     if (props.winningLine && current.context.winning.includes(props.value)) {
@@ -129,7 +100,7 @@ const ticTacToe: NextPage = () => {
     } else {
       // Player X
       if (current.context.player == "X") {
-        let value = helper.bestMove(current);
+        let value = helper.bestMove(current, winningLines);
         console.log({ value });
         
         //update board with index chosen from bestMove();

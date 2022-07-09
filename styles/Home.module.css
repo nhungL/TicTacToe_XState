@@ -201,13 +201,6 @@
   grid-template-rows: repeat(3, 1fr);
 }
 
-.svg{
-  text-align: left;
-  position: absolute;
-  width: -webkit-fill-available;
-  height: -webkit-fill-available;
-}
-
 .option {
   margin: 0 10px ;
   font-size: 1.5rem;
@@ -265,6 +258,10 @@
   font-family: cursive;
   /* color: #e60000; */
   animation: pulse 5s ;
+  padding: 0;
+  align-items: center;
+  display: flex;
+  justify-content: center;
   /* background-image: linear-gradient(
       90deg,
       transparent 79px,

@@ -130,7 +130,7 @@ export const ticTacToeMachine = ticTacToeModel.createMachine(
       checkWin: (ctx) => {
         // console.log("in check winner")
         //all possible lines to win
-        const winningLines = generateWinningLines(Math.sqrt(ctx.board.length));
+        const winningLines = generateWinningLines(Math.sqrt(ctx.board.length))[0];
         // console.log({winningLines})
         var xWon = true;
         for (let line of winningLines) {
