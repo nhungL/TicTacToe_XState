@@ -1,14 +1,11 @@
-// import type { NextPage } from "next";
 import React, { useContext } from "react";
 import styles from "../styles/Home.module.css";
 import { useSelector } from "@xstate/react";
-import {
-  ticTacToeMachine,
-  ticTacToeModelContext,
-  TTTContext,
-} from "../machines/ticTacToeMachine";
+import { TTTContext } from "../machines/ticTacToeMachine";
 import * as helper from "../helper/mainFunctions";
 import styled from "styled-components";
+import { renderTitle } from "./title";
+import { Square } from "./square";
 
 const ticTacToe = () => {
   const { service } = useContext(TTTContext);
@@ -32,113 +29,9 @@ const ticTacToe = () => {
     return state.context.winning;
   });
 
-  // choose size
-  const handleSelectBoardSize = () => {
-    if (typeof window !== "undefined") {
-      var e = document.getElementById("select1") as HTMLSelectElement;
-      var value = parseInt(e.value);
-      console.log("size chosen", value);
-      service.send("INITIALIZE", { value: value });
-    }
-  };
-
-  //render title of game
-  function renderTitle() {
-    // console.log(current);
-    if (currState == "waiting") {
-      return (
-        <div>
-          <p className={styles.smalltitle}>
-            I want to play:
-            <select id="select1" className={styles.option}>
-              <option value="0">Select</option>
-              <option value="3">3x3</option>
-              <option value="5">5x5</option>
-            </select>
-            <button className={styles.option} onClick={handleSelectBoardSize}>
-              PLAY
-            </button>
-          </p>
-        </div>
-      );
-    }
-    if (currState == "playing") {
-      return <p className={styles.subtitle}>Your turn: {player}</p>;
-    }
-    if (currState == "winner") {
-      return (
-        <div>
-          <p className={styles.subtitle}>Congrats! {winner} wins</p>
-          <p className={styles.smalltitle}>Click reset button to play again</p>
-        </div>
-      );
-    }
-    if (currState == "draw") {
-      return (
-        <div>
-          <p className={styles.subtitle}>It's a tie</p>
-          <p className={styles.smalltitle}>Click reset button to play again</p>
-        </div>
-      );
-    }
-  }
-
-  //variables in square
-  interface SquareProps {
-    value: number;
-    win: boolean;
-  }
-
-  function normalSquare(props: SquareProps) {
-    return (
-      <button
-        className={styles.square}
-        id="button"
-        onClick={() => {
-          service.send("PLAY", { value: props.value });
-        }}
-      >
-        {board[props.value]}
-      </button>
-    );
-  }
-
-  //create a square with value passed to machine
-  let win = false;
-  function Square(props: SquareProps) {
-    // check winner
-    if (props.win && winningLine.includes(props.value)) {
-      win = true;
-      return (
-        <button id="winSquare" className={`${styles.squareHighLight}`}>
-          {board[props.value]}
-        </button>
-      );
-    } else {
-      // Player X
-      if (player == "X") {
-        let value = helper.bestMove(board);
-        // console.log({ value });
-        //update board with index chosen from bestMove();
-        if (props.value == value) {
-          service.send("PLAY", { value: value });
-          return (
-            <button className={styles.square} id="ai">
-              {board[props.value]}
-            </button>
-          );
-        }
-        return normalSquare(props);
-      } else {
-        // player O
-        return normalSquare(props);
-      }
-    }
-  }
-
+  const winningLines = helper.generateWinningLines(Math.sqrt(board.length))[0];
   const renderBoard = helper.range(0, boardSize).map((i) => {
-    console.log("in renderBoard");
-    return <Square key={i} value={i} win={winner !== ""} />;
+    return <Square key={i} value={i} win={winningLine.includes(i)} winningLines={winningLines}/>;
   });
 
   // main page
@@ -146,13 +39,12 @@ const ticTacToe = () => {
     <div className={styles.container}>
       <div className={styles.main}>
         <div className={styles.title}>Tic Tac Toe</div>
-        <div>{renderTitle()}</div>
+        <div>{renderTitle(currState, player, winner)}</div>
         {boardSize != 0 && (
           <div className={styles.wrapper}>
             <div className={styles.boardGrid}>{renderBoard}</div>
           </div>
         )}
-
         <div>
           <button
             className={styles.resetButton}
