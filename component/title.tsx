@@ -10,7 +10,6 @@ export const renderTitle = (
   winner: string
 ) => {
   const { service } = useContext(TTTContext);
-  // console.log(service);
   const handleSelectBoardSize = () => {
     if (typeof window !== "undefined") {
       var e = document.getElementById("select1") as HTMLSelectElement;
@@ -27,7 +26,7 @@ export const renderTitle = (
           <select id="select1" className={styles.option}>
             <option value="0">Select</option>
             <option value="3">3x3</option>
-            {/* <option value="5">5x5</option> */}
+            <option value="5">5x5</option>
           </select>
           <button className={styles.option} onClick={handleSelectBoardSize}>
             PLAY
