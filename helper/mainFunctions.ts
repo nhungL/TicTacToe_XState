@@ -20,6 +20,7 @@ export function bestMove(board: any, winningLines: any[][]) {
             }
         }
     }
+    console.log({move});
     return move;
 }
 
@@ -29,9 +30,9 @@ let scores: Record<string, number> = {
     "": 0,
 };
 export function minimax(board: any[], depth: number, isMaximizing: boolean, winningLines: any[][]) {
-    let res = checkWinner(board, winningLines);
-    if (res !== null) {
-        return scores[res];
+    var res = checkWinner(board, winningLines);
+    if (res.winner !== null) {
+        return scores[res.winner];
     }
     if (isMaximizing) {
         let bestScore = -Infinity;
@@ -61,8 +62,7 @@ export function minimax(board: any[], depth: number, isMaximizing: boolean, winn
 
 //function to check winner if any
 export function checkWinner(board: any[], winningLines: any[][]) {
-    let res = "";
-    var xWon = true;
+    let winner = "", winningLine = [];
     for (let line of winningLines) {
         var xWon = true;
         var oWon = true;
@@ -85,10 +85,10 @@ export function checkWinner(board: any[], winningLines: any[][]) {
             }
         }
 
-        if (xWon) { res = "X" }
-        if (oWon) { res = "O" }
+        if (xWon) { winner = "X"; winningLine = line; }
+        if (oWon) { winner = "O"; winningLine = line; }
     }
-    return res
+    return {winner, winningLine};
 }
 
 export function generateWinningLines(input: number) {
