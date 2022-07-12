@@ -13,7 +13,6 @@
     ),
     linear-gradient(#eee 0.1em, transparent 0.1em);
   background-size: 100% 1.2em;
-  font-family: Palatino, "Palatino Linotype", serif;
 }
 
 .main {
@@ -193,18 +192,11 @@
   position: relative;
 }
 
-.boardGrid {
-  display: grid;
-  height: 50vmin;
-  width: 50vmin;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-}
-
 .option {
-  margin: 0 10px ;
-  font-size: 1.5rem;
-  font-family: Palatino, "Palatino Linotype", serif;
+  margin: 0 10px;
+  font-size: 1.6rem;
+  font-family: "Indie Flower", "Comic Sans";
+  background-color: transparent;
 }
 
 .subtitle {
@@ -214,21 +206,35 @@
 
 .smalltitle {
   font-size: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 3.5rem;
 }
 
 .lineHorizontal {
-   stroke:red;
-   stroke-linecap: round;
-   stroke-width: 8;
+  stroke: red;
+  stroke-linecap: round;
+  stroke-width: 8;
+}
+
+.error {
+  font-size: 1.2rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+	margin: 1rem auto;
+	padding: 10px 5px 10px 5px;
+  color: #D8000C;
+	background-color: #FFBABA;
+  justify-content: center;
+  max-width: fit-content;
 }
 
 .resetButton {
-  margin-top: 2rem;
+  margin-top: 3rem;
   height: 2.7rem;
   width: 4.5rem;
   background-color: rgb(187, 187, 187);
   color: black;
   border-radius: 0.5rem;
-  font-family: "Shadows Into Light", cursive;
+  font-family: "Indie Flower", "Comic Sans";
   font-size: x-large;
 }
