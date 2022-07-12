@@ -5,9 +5,10 @@ import { TTTContext } from "../machines/ticTacToeMachine";
 import { useSelector } from "@xstate/react";
 
 const Rotate = styled.hr<{ id: string }>`
-  color: blue;
+  color: grey;
   border-top: 0.3rem solid;
   position: absolute;
+  margin: 0;
   ${(props) => {
     if (props.id == "0") return `transform: rotate(0deg); width: 35%;`;
     if (props.id == "90") return `transform: rotate(90deg); width: 35%;`;

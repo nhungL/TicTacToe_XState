@@ -1,14 +1,13 @@
 import { useSelector } from "@xstate/react";
 import { useContext } from "react";
 import { TTTContext } from "../../machines/ticTacToeMachine";
-import * as helper from "../../helper/mainFunctions";
 import { WinningLine } from "../winningLine";
-import { StyledButton } from "./styles";
+import { StyledSquare } from "./styles";
 
 //variables in square
 interface SquareProps {
   value: number;
-  win: boolean;
+  hasWon: boolean;
   winningLines: any[][];
   size: number;
 }
@@ -19,12 +18,18 @@ export const Square = (props: SquareProps) => {
   const board = useSelector(service, (state) => {
     return state.context.board;
   });
-  const playerSelector = (state: any) => state.context.player;
-  const player = useSelector(service, playerSelector);
 
-  function normalSquare(props: SquareProps) {
+  // check winner
+  if (props.hasWon) {
     return (
-      <StyledButton
+      <StyledSquare size={props.size} id="winSquare">
+        <WinningLine />
+        {board[props.value]}
+      </StyledSquare>
+    );
+  } else {
+    return (
+      <StyledSquare
         size={props.size}
         id="normalButton"
         onClick={() => {
@@ -32,33 +37,7 @@ export const Square = (props: SquareProps) => {
         }}
       >
         {board[props.value]}
-      </StyledButton>
+      </StyledSquare>
     );
-  }
-
-  // check winner
-  if (props.win) {
-    return (
-      <StyledButton size={props.size} id="winSquare">
-        <WinningLine />
-        {board[props.value]}
-      </StyledButton>
-    );
-  } else {
-    // Player X
-    if (player == "X") {
-      let value = helper.bestMove(board, props.winningLines);
-      //update board with index chosen from bestMove();
-      if (props.value == value) {
-        service.send("PLAY", { value: value });
-        return (
-          <StyledButton size={props.size} id="normalButton">{board[props.value]}</StyledButton>
-        );
-      }
-      return normalSquare(props);
-    } else {
-      // player O
-      return normalSquare(props);
-    }
   }
 };

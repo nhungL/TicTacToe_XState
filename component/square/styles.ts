@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StyledButton = styled.button<{ size: number, id: string }>`
+export const StyledSquare = styled.button<{ size: number, id: string }>`
     ${(props) => {
         if (props.size == 3) {
             if (props.id == "normalButton") return `
@@ -79,7 +79,7 @@ export const StyledButton = styled.button<{ size: number, id: string }>`
         }
         if (props.size == 5) {
             if (props.id == "normalButton") return `
-                font-size: xxx-large;
+                font-size: xx-large;
                 border: solid 1px black;
                 background-color: transparent;
                 font-family: cursive;
@@ -119,7 +119,7 @@ export const StyledButton = styled.button<{ size: number, id: string }>`
             `;
 
             if (props.id == "winSquare") return `
-                font-size: xxx-large;
+                font-size: xx-large;
                 border: solid 1px black;
                 background-color: transparent;
                 font-family: cursive;
