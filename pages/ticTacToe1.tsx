@@ -87,7 +87,7 @@ const ticTacToe: NextPage = () => {
 
   //create a square with value passed to machine
   let win = false;
-  const winningLines = helper.generateWinningLines(Math.sqrt(current.context.size))[0]
+  const winningLines = current.context.winningLines;
   function Square(props: SquareProps) {
     // check winner
     if (props.winningLine && current.context.winning.includes(props.value)) {
@@ -135,23 +135,6 @@ const ticTacToe: NextPage = () => {
         <div>{renderTitle()}</div>
         {current.context.board.length != 0 && (
           <div className={styles.wrapper}>
-            {/* {current.context.winner != "" && (
-            <div className={styles.svg}>
-              <svg
-                className={styles.svg}
-                viewBox="0 0 500 500"
-                preserveAspectRatio="xMidYMid slice"
-              >
-                <line
-                  className={styles.lineHorizontal}
-                  x1={x1}
-                  y1={y1}
-                  x2={x2}
-                  y2={y2}
-                />
-              </svg>
-            </div>
-          )} */}
             <div className={styles.boardGrid}>{renderBoard}</div>
           </div>
         )}
