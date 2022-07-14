@@ -8,7 +8,7 @@ import {
 } from "../machines/ticTacToeMachine";
 import TicTacToe from "../component/main/ticTacToe";
 
-const ticTacToeContainer: NextPage = () => {
+const TicTacToeContainer: NextPage = () => {
   const authService = useInterpret(ticTacToeMachine, {
     context: ticTacToeModelContext,
   }).onTransition((state) => {
@@ -25,4 +25,4 @@ const ticTacToeContainer: NextPage = () => {
     </div>
   );
 };
-export default ticTacToeContainer;
+export default TicTacToeContainer;

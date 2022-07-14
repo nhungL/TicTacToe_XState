@@ -7,7 +7,7 @@ import {
 } from "../machines/ticTacToeMachine";
 import * as helper from "../helper/mainFunctions";
 
-const ticTacToe: NextPage = () => {
+const TicTacToe: NextPage = () => {
   const [current, send] = useMachine(ticTacToeMachine);
 
   // choose size
@@ -153,4 +153,4 @@ const ticTacToe: NextPage = () => {
     </div>
   );
 };
-export default ticTacToe;
+export default TicTacToe;
