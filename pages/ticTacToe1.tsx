@@ -58,7 +58,7 @@ const TicTacToe: NextPage = () => {
     if (current.value == "draw") {
       return (
         <div>
-          <p className={styles.subtitle}>It's a tie</p>
+          <p className={styles.subtitle}>It&apos;s a tie</p>
           <p className={styles.smalltitle}>Click reset button to play again</p>
         </div>
       );
