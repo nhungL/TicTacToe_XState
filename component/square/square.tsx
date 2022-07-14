@@ -1,7 +1,7 @@
 import { useSelector } from "@xstate/react";
 import { useContext } from "react";
 import { TTTContext } from "../../machines/ticTacToeMachine";
-import { WinningLine } from "../winningLine";
+import { WinningLine } from "../win/winningLine";
 import { StyledSquare } from "./styles";
 
 //variables in square

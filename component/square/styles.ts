@@ -48,7 +48,8 @@ export const StyledSquare = styled.button<{ size: number, id: string }>`
                 
                 @keyframes pulse {
                     0% {
-                    background-color: rgb(230, 93, 93);
+                        background-color: #8f2020;
+                        box-shadow: inset 0px 0px 5px 7px #8f2020;
                     }
                 }
 
@@ -131,7 +132,8 @@ export const StyledSquare = styled.button<{ size: number, id: string }>`
                 
                 @keyframes pulse {
                     0% {
-                    background-color: rgb(230, 93, 93);
+                    background-color: #8f2020;
+                    box-shadow: inset 0px 0px 5px 7px #8f2020;
                     }
                 }
 
