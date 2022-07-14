@@ -21,8 +21,20 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  padding: 1rem 1rem;
+}
+
+.mainContent {
+  background-color: transparent;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 3rem 0;
 }
 
 .footer {
@@ -56,6 +68,8 @@
   margin: 0;
   line-height: 1.15;
   font-size: 4rem;
+  color: black;
+  text-shadow: -4px 2px 4px #680000;
 }
 
 .title,
@@ -188,53 +202,16 @@
 }
 
 /* For Tic Tac Toe */
-.wrapper {
-  position: relative;
-}
-
-.option {
-  margin: 0 10px;
-  font-size: 1.6rem;
-  font-family: "Indie Flower", "Comic Sans";
-  background-color: transparent;
-}
-
 .subtitle {
   font-size: 2rem;
   margin-top: 0;
+  text-shadow: 0px 0px 1px #680000;
 }
 
 .smalltitle {
-  font-size: 2rem;
+  font-size: 1.5rem;
   margin-top: 2rem;
   margin-bottom: 3.5rem;
+  text-shadow: 0px 0px 0px #680000;
 }
 
-.lineHorizontal {
-  stroke: red;
-  stroke-linecap: round;
-  stroke-width: 8;
-}
-
-.error {
-  font-size: 1.2rem;
-  border: 1px solid;
-  border-radius: 0.5rem;
-	margin: 1rem auto;
-	padding: 10px 5px 10px 5px;
-  color: #D8000C;
-	background-color: #FFBABA;
-  justify-content: center;
-  max-width: fit-content;
-}
-
-.resetButton {
-  margin-top: 3rem;
-  height: 2.7rem;
-  width: 4.5rem;
-  background-color: rgb(187, 187, 187);
-  color: black;
-  border-radius: 0.5rem;
-  font-family: "Indie Flower", "Comic Sans";
-  font-size: x-large;
-}
