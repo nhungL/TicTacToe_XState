@@ -6,7 +6,7 @@ import {
   ticTacToeModelContext,
   TTTContext,
 } from "../machines/ticTacToeMachine";
-import TicTacToe from "../component/ticTacToe";
+import TicTacToe from "../component/main/ticTacToe";
 
 const ticTacToeContainer: NextPage = () => {
   const authService = useInterpret(ticTacToeMachine, {
