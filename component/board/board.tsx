@@ -24,9 +24,6 @@ const StyledBoard = styled.div<{ size: number }>`
 
 export const Board = () => {
   const { service } = useContext(TTTContext);
-  const board = useSelector(service, (state) => {
-    return state.context.board;
-  });
   const boardSizeSelector = (state: any) => state.context.board.length;
   const boardSize = useSelector(service, boardSizeSelector);
   const winningLine = useSelector(service, (state) => {

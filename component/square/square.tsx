@@ -8,7 +8,7 @@ import { StyledSquare } from "./styles";
 interface SquareProps {
   value: number;
   hasWon: boolean;
-  winningLines: any[][];
+  winningLines: number[][];
   size: number;
 }
 

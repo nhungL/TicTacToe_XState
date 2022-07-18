@@ -39,12 +39,22 @@ export const TTTContainer = styled.div`
         padding: 3rem 0;
     }
 
+    @media only screen and (max-width: 740px) {
+      div.title {
+        margin: 0;
+        line-height: 1.15;
+        font-size: 3.5rem;
+        color: black;
+        text-shadow: -2px 1px 4px #680000;
+      }
+    }
+
     .title {
         margin: 0;
         line-height: 1.15;
         font-size: 4rem;
         color: black;
-        text-shadow: -4px 2px 4px #680000;
+        text-shadow: -2px 1px 4px #680000;
     }
 
     .wrapper {
@@ -64,84 +74,75 @@ export const TTTContainer = styled.div`
         margin-bottom: 3.5rem;
         text-shadow: 0px 0px 0px #680000;
     }
+
+    .error {
+      border: 1px solid;
+      border-radius: 0.5rem;
+      margin-bottom: 10px; 
+      padding: 10px 5px 10px 5px;
+      box-shadow: inset 0 0 20px 12px #ae0505;
+      border-color: #680000;
+      justify-content: center;
+      max-width: fit-content;
+    }
     
-    .resetButton {
-        margin-top: 3rem;
-        border-radius: 0.3rem;
-        font-family: "Indie Flower", "Comic Sans";
-        font-size: x-large;
-        transition: all .15s linear 0s;
-        position: relative;
-        padding: 10px 10px;
-        background-color: #8959361f;
-        color: black;
-        
+    .play-again-button {
+      margin: 3rem 0 0 0rem;
+      border-radius: 0.3rem;
+      font-family: "Indie Flower", "Comic Sans";
+      font-size: x-large;
+      transition: all .15s linear 0s;
+      position: relative;
+      padding: 10px 10px;
+      background-color: #8959361f;
+      color: black;
+      cursor: pointer;
+    
+      
+      box-shadow: -3px 3px 4px 3px #680000;
+      text-shadow: 0px 0px 1px #680000;
+      
+      &:hover {
         box-shadow: -3px 3px 4px 3px #680000;
-        text-shadow: 0px 0px 1px #680000;
-        
-        &:hover {
-          top: 3px;
-          left: -3px;
-          box-shadow: -3px 3px 4px 3px #680000;
-          
-          &::after {
-            top: 1px;
-            left: -2px;
-            width: 4px;
-            height: 4px;
-          }
-          
-          &::before {
-            bottom: -2px;
-            right: 1px;
-            width: 4px;
-            height: 4px;
-          }
-        }
-        
-        &::after {
-          transition: all .15s linear 0s;
-          content: '';
-          position: absolute;
-          top: 2px;
-          left: -4px;
-          width: 8px;
-          height: 8px;
-          background-color: #680000;
-          transform: rotate(45deg);
-          z-index: -1;
-          
-        }
-        
-        &::before {
-          transition: all .15s linear 0s;
-          content: '';
-          position: absolute;
-          bottom: -4px;
-          right: 2px;
-          width: 8px;
-          height: 8px;
-          background-color: #680000;
-          transform: rotate(45deg);
-          z-index: -1;
-        }
+        background-color: #8959364a;
       }
+    }
+    
+    a.play-again-button { position: relative; }
+    
+    a:active.play-again-button {
+      background-color: #3e8e41;
+      box-shadow: 0 5px #666;
+      transform: translateY(2px);
+    }
+
+    .backButton {
+      margin: 3rem 4rem 0 0;
+      border-radius: 0.3rem;
+      font-family: "Indie Flower", "Comic Sans";
+      font-size: x-large;
+      transition: all .15s linear 0s;
+      position: relative;
+      padding: 10px 10px;
+      background-color: #8959361f;
+      color: black;
+      cursor: pointer;
+    
       
-      a.resetButton { position: relative; }
+      box-shadow: -3px 3px 4px 3px #680000;
+      text-shadow: 0px 0px 1px #680000;
       
-      a:active.resetButton {
-        top: 6px;
-        left: -6px;
-        box-shadow: none;
-        
-        &:before {
-          bottom: 1px;
-          right: 1px;
-        }
-        
-        &:after {
-          top: 1px;
-          left: 1px;
-        }
+      &:hover {
+        box-shadow: -3px 3px 4px 3px #680000;
+        background-color: #8959364a;
       }
+    }
+    
+    a.backButton { position: relative; }
+    
+    a:active.backButton {
+      background-color: #3e8e41;
+      box-shadow: 0 5px #666;
+      transform: translateY(2px);
+    }
 `;
