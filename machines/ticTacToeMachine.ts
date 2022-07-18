@@ -33,6 +33,7 @@ export const ticTacToeModelEvents = {
     FINDMOVE: () => ({}),
     winner: () => ({}),
     RESET: () => ({}),
+    BACK: () => ({}),
   }
 };
 
@@ -97,10 +98,13 @@ export const ticTacToeMachine =
         draw: {},
       },
       on: {
-        RESET: {
+        BACK: {
           actions: "resetGame",
           target: "waiting",
-          internal: false,
+        },
+        RESET: {
+          actions: "resetBoard",
+          target: "XTurn",
         },
       },
     },
@@ -142,6 +146,27 @@ export const ticTacToeMachine =
           },
           moves: (ctx) => ctx.moves + 1,
           player: (ctx) => (ctx.player === "X" ? "O" : "X")
+        }),
+        resetBoard: ticTacToeModel.assign({
+          board: (ctx) => {
+            console.log("in initialize board");
+            let initialBoard = Array(ctx.size * ctx.size).fill("");
+            return ctx.board = initialBoard;
+          },
+          winning: (ctx) => {
+            return ctx.winning = Array(ctx.size).fill("");
+          },
+          winningLines: (ctx) => {
+            return ctx.winningLines = generateWinningLines(ctx.size)[0]
+          },
+          moves: (ctx) => {
+            console.log(ctx);
+            return ctx.moves = 0;
+          },
+          winner: (ctx) => {
+            return ctx.winner = "";
+          },
+          player: (ctx) => "X",
         }),
         resetGame: ticTacToeModel.assign(ticTacToeModel.initialContext),
         setWinner: ticTacToeModel.assign({
