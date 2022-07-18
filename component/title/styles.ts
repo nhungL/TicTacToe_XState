@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { device } from "../../helper/device";
 
 export const StyledInput = styled.input<{ value: string }>`
     content-visibility: hidden;
