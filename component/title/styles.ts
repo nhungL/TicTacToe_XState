@@ -1,61 +1,77 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
+import { device } from "../../helper/device";
 
-export const StyledOption = styled.option<{ value: string }>`
-    width: 250px;
-    height: 250px;
-    font-size: 1.2em;
-    margin: 0 1rem;
-    text-align: center;
-    display: inline-block;
-    cursor: pointer;
-    border: #d7d7d7 solid 2px;
+export const StyledInput = styled.input<{ value: string }>`
+    content-visibility: hidden;
+    border: #d7d7d7 solid 3px;
     border-radius: 5px;
     background-size: contain;
-    box-shadow:inset 0 0 0 2000px #8959361f;
-    :checked {
-        border: #680000 solid 5px;
+    -webkit-appearance: none;
+    box-shadow:inset 0px -4px 20px 120px #8959362e;
+    :focus {
+        border: #680000 solid 5px ;
     }
-    ${(props) => {
-        if (props.value == "3") return `background-image: url("3x3board.png")`;
-        if (props.value == "5") return `background-image: url("5x5board.png")`;
-    }};
-`;
 
-export const StyledSelect = styled.select<{}>`
-  font-size: 1.6rem;
-  font-family: "Indie Flower", "Comic Sans";
-  background-color: transparent;
-  border: none;
-  overflow: hidden;
-  justify-content: space-between;
-  height: 250px;
-  :focus {
-    outline: none;
-  }
+    margin: 0 1rem;
+    ${(props) => {
+    if (props.value == "3") return `background-image: url("3x3board1.png");width: 250px;
+    height: 250px;
+  }`;
+    if (props.value == "5") return `background-image: url("5x5board1.png"); width: 250px;
+    height: 250px;
+  }`;
+  }};
 `;
 
 export const StyledWaitingPlayout = styled.div`
-  .smallTitle {
-    font-size: 2rem;
-    margin: 2rem;
-    border-top: 2px solid #680000;
-    border-bottom: 2px solid #680000;
-    box-shadow: inset 0 0 20px 15px #8959361f;
+  @media only screen and (max-width: 740px) { 
+    .display-select {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .label {
+      font-size: 1.5rem;
+    }
+    
+    .select-wrap {
+      background-color:transparent;
+      display: flex;
+      flex-direction: column;
+      text-shadow: 0px 0px 2px #680000;
+      align-items: center;
+      margin-top: 2rem;
+    }
+  
+    .smallTitle {
+      font-size: 1.5rem;
+      margin: 0.5rem;
+      border-top: 2px solid #680000;
+      border-bottom: 2px solid #680000;
+      box-shadow: inset 0 0 20px 15px #89593654;
+      }
     }
   }
-  .p {
-    margin: 0;
-  }
-  .optionTitle {
-    font-size: 2rem;
+
+  .display-select {
     display: flex;
-    flex: 1;
-    justify-content: space-between;
-    text-align: center;
-    margin: 0 5.7rem;
-    color: black;
-    text-shadow: 0px 0px 1px #680000;
   }
+
+  .select-wrap {
+    background-color:transparent;
+    display: flex;
+    flex-direction: column;
+    font-size: 2rem;
+    text-shadow: 0px 0px 2px #680000;
+  }
+
+  .smallTitle {
+    border-top: 2px solid #680000;
+    border-bottom: 2px solid #680000;
+    box-shadow: inset 0 0 20px 15px #89593654;
+    }
+  }
+
   .error {
     font-size: 1.5rem;
     border: 1px solid;
@@ -68,6 +84,7 @@ export const StyledWaitingPlayout = styled.div`
     max-width: fit-content;
     min-width: 400px;
   }
+
   .textError {
     margin: 0 1rem;
   }
@@ -82,77 +99,27 @@ export const StyledWaitingPlayout = styled.div`
     padding: 10px 10px;
     background-color: #8959361f;
     color: black;
+    cursor: pointer;
+  
     
     box-shadow: -3px 3px 4px 3px #680000;
     text-shadow: 0px 0px 1px #680000;
     
     &:hover {
-      top: 3px;
-      left: -3px;
       box-shadow: -3px 3px 4px 3px #680000;
-      
-      &::after {
-        top: 1px;
-        left: -2px;
-        width: 4px;
-        height: 4px;
-      }
-      
-      &::before {
-        bottom: -2px;
-        right: 1px;
-        width: 4px;
-        height: 4px;
-      }
-    }
-    
-    &::after {
-      transition: all .15s linear 0s;
-      content: '';
-      position: absolute;
-      top: 2px;
-      left: -4px;
-      width: 8px;
-      height: 8px;
-      background-color: #680000;
-      transform: rotate(45deg);
-      z-index: -1;
-      
-    }
-    
-    &::before {
-      transition: all .15s linear 0s;
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      right: 2px;
-      width: 8px;
-      height: 8px;
-      background-color: #680000;
-      transform: rotate(45deg);
-      z-index: -1;
+      background-color: #8959364a;
     }
   }
   
   a.playButton { position: relative; }
   
   a:active.playButton {
-    top: 6px;
-    left: -6px;
-    box-shadow: none;
-    
-    &:before {
-      bottom: 1px;
-      right: 1px;
-    }
-    
-    &:after {
-      top: 1px;
-      left: 1px;
-    }
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(2px);
   }
 
-  .smalltitle {
+  .waiting {
     font-size: 2rem;
     margin-top: 2rem;
     margin-bottom: 3.5rem;

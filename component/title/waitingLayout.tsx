@@ -1,50 +1,67 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { TTTContext } from "../../machines/ticTacToeMachine";
-import { StyledOption, StyledSelect, StyledWaitingPlayout } from "./styles";
+import { StyledInput, StyledWaitingPlayout } from "./styles";
 
 export const WaitingLayout = () => {
   const { service } = useContext(TTTContext);
   const [error, setError] = useState(false);
+  const [size, setSize] = useState(0);
+
+  function assignSize(value: number) {
+    setSize(value);
+  }
 
   const handleSelectBoardSize = () => {
-    if (typeof window !== "undefined") {
-      var e = document.getElementById("select1") as HTMLSelectElement;
-      if (e.value == "") {
-        setError(true);
-      } else {
-        setError(false);
-        var value = parseInt(e.value);
-        console.log("size chosen", value);
-        service.send("INITIALIZE", { value: value });
-      }
+    if (size == 0) {
+      setError(true);
+    } else {
+      setError(false);
+      console.log(size);
+      console.log("size chosen", size);
+      service.send("INITIALIZE", { value: size });
     }
   };
 
   return (
     <StyledWaitingPlayout>
-      <div className="smalltitle">
+      <div className="waiting">
         <p className="smallTitle">Choose a board size</p>
-        <div className="optionTitle">
-          <p className="p">3x3</p>
-          <p className="p">5x5</p>
-        </div>
-        <StyledSelect id="select1" multiple>
-          <StyledOption
-            value="3"
-          ></StyledOption>
-          <StyledOption
-            value="5"
-          ></StyledOption>
-        </StyledSelect>
-        <br />
-        {error && (
-          <div className="error">
-            <span className="textError">Board size is required!</span>
+        <div className="display-select">
+          <div className="select-wrap">
+            <label className="label" htmlFor="3x3">
+              3x3
+            </label>
+            <StyledInput
+              type="button"
+              value="3"
+              id="3x3"
+              onClick={() => assignSize(3)}
+            ></StyledInput>
           </div>
-        )}
-        <button className="playButton" onClick={handleSelectBoardSize}>
-          PLAY
-        </button>
+
+          <div className="select-wrap">
+            <label className="label" htmlFor="5x5">
+              5x5
+            </label>
+            <StyledInput
+              type="button"
+              value="5"
+              id="5x5"
+              onClick={() => assignSize(5)}
+            ></StyledInput>
+          </div>
+        </div>
+        <br />
+        <div>
+          <button className="playButton" onClick={handleSelectBoardSize}>
+            PLAY
+          </button>
+          {error && (
+            <div className="error">
+              <span className="textError">Board size is required!</span>
+            </div>
+          )}
+        </div>
       </div>
     </StyledWaitingPlayout>
   );
