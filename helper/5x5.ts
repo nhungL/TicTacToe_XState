@@ -1,4 +1,3 @@
-import { allPossibleWin } from "./3x3";
 import { checkWinner } from "./mainFunctions";
 
 interface Minimax5 {
@@ -27,47 +26,47 @@ export function minimax5(board: any[],
     depth: number,
     maximize: boolean,
     alpha = -Infinity,
-    beta = -Infinity): Promise<Minimax5> {
-    var findBestMove = setInterval(async () => {
-        let scores: Record<string, number> = {
-            X: 10 + depth,
-            O: -10 - depth,
-            tie: 0,
-        };
-        var winner = checkWinner(board).winner;
-        if (winner != null) {
-            return { move: undefined, bestScore: scores[winner] };
-        }
-        else {
-            var move = undefined;
-            var value = null;
-            var bestScore = null;
+    beta = -Infinity) {
+    // var findBestMove = setInterval(async () => {
+    let scores: Record<string, number> = {
+        X: 10 + depth,
+        O: -10 - depth,
+        tie: 0,
+    };
+    var winner = checkWinner(board).winner;
+    if (winner != null) {
+        return { move: undefined, bestScore: scores[winner] };
+    }
+    else {
+        var move = undefined;
+        var value = null;
+        var bestScore = null;
 
-            console.log("inside minimax5")
-            for (let i = 0; i < 25; i++) {
-                if (board[i] == "") {
-                    board[i] = player_id
-                    var res = await minimax5(board, 'X' ? 'O' : 'X', depth - 1, false, alpha, beta);
-                    value = res.bestScore;
-                    board[i] = ""
-                    if (value != null) {
-                        if (maximize) alpha = Math.max(alpha, value);
-                        else beta = Math.min(beta, value)
+        console.log("inside minimax5")
+        for (let i = 0; i < 25; i++) {
+            if (board[i] == "") {
+                board[i] = player_id
+                var res = minimax5(board, 'X' ? 'O' : 'X', depth - 1, false, alpha, beta);
+                value = res.bestScore;
+                board[i] = ""
+                if (value != null) {
+                    if (maximize) alpha = Math.max(alpha, value);
+                    else beta = Math.min(beta, value)
 
-                        if (maximize && alpha != -Infinity && beta != Infinity && alpha >= beta) break
-                        if (!maximize && alpha != -Infinity && beta != Infinity && beta >= alpha) break
-                        move = i
-                    }
+                    if (maximize && alpha != -Infinity && beta != Infinity && alpha >= beta) break
+                    if (!maximize && alpha != -Infinity && beta != Infinity && beta >= alpha) break
+                    move = i
                 }
             }
-            if (maximize) {
-                bestScore = alpha
-                return { move, bestScore };
-            }
-            bestScore = beta;
+        }
+        if (maximize) {
+            bestScore = alpha
             return { move, bestScore };
         }
-    }, 500);
+        bestScore = beta;
+        return { move, bestScore };
+    }
+    // }, 500);
 }
 
 export function checkWinner5x5(board: any[], size: number) {
