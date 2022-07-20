@@ -1,135 +1,81 @@
+import * as helper3 from "./3x3";
+import * as helper5 from "./5x5";
+
 //function to create n squares
-export function range(start: number, end: number) {
-    return Array(end - start)
-        .fill(null)
-        .map((_, i) => i + start);
+export function range(size: number, end: number) {
+    var board = [];
+    for (let i = 0; i < size; i++) {
+        for (let j = i; j < end; j += size) {
+            board.push(j)
+        }
+    }
+    return board;
+}
+
+function randomInt(min: number, max: number) {
+    return Math.random() * (max - min) + min;
 }
 
 //function to find best next move for computer to win
-export function bestMove(board: any, winningLines: any[][]) {
-    let bestScore = -Infinity;
-    let move;
-    for (let idx = 0; idx < board.length; idx++) {
-        if (board[idx] == "") {
-            board[idx] = "X";
-            let score = minimax(board, 0, false, winningLines);
-            board[idx] = "";
-            if (score > bestScore) {
-                bestScore = score;
-                move = idx;
+export async function bestMove(board: any[]) {
+    console.log("find the best move")
+    var bestScore = -Infinity;
+    let move = null;
+    var size = Math.sqrt(board.length);
+    console.log({ size })
+    // if (size == 3) {
+        const board_2d = [];
+        for (let i = 0; i < board.length; i += size) {
+            board_2d.push(board.slice(i, i + size));
+        }
+        console.log(board_2d)
+        for (let i = 0; i < board_2d.length; i++) {
+            for (let j = 0; j < board_2d.length; j++) {
+                if (board_2d[i][j] == "") {
+                    board_2d[i][j] = "X";
+                    let score = helper3.minimax3(board_2d, 0, false);
+                    board_2d[i][j] = "";
+                    if (score > bestScore) {
+                        bestScore = score;
+                        move = j + board_2d.length * i;
+                    }
+                }
             }
         }
-    }
-    console.log({move});
+    // }
+    // else {
+    //     try {
+    //         let res = setTimeout(minimax5(board, "X", 5, true), 100);
+    //         res.then((data: { move: null; }) => {
+    //             if (data.move != null) { move = data.move; };
+    //         })
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
+    console.log({ move });
+    if (move == null) move = randomInt(0, 24);
     return move;
 }
 
-let scores: Record<string, number> = {
-    "X": 1,
-    "O": -1,
-    "": 0,
-};
-export function minimax(board: any[], depth: number, isMaximizing: boolean, winningLines: any[][]) {
-    var res = checkWinner(board, winningLines);
-    if (res.winner !== null) {
-        return scores[res.winner];
-    }
-    if (isMaximizing) {
-        let bestScore = -Infinity;
-        for (let idx = 0; idx < board.length; idx++) {
-            if (board[idx] == "") {
-                board[idx] = "X";
-                let score = minimax(board, depth + 1, false, winningLines);
-                board[idx] = "";
-                bestScore = Math.max(score, bestScore)
-            }
-        }
-        return bestScore;
+export function checkWinner(board: any[]) {
+    var size = Math.sqrt(board.length);
+    if (size == 3) {
+        return helper3.checkWinner3x3(board, 3);
     }
     else {
-        let bestScore = -Infinity;
-        for (let idx = 0; idx < board.length; idx++) {
-            if (board[idx] == "") {
-                board[idx] = "O";
-                let score = minimax(board, depth + 1, true, winningLines);
-                board[idx] = "";
-                bestScore = Math.min(score, bestScore)
-            }
-        }
-        return bestScore;
+        return helper5.checkWinner5x5(board, 5);
     }
-}
 
-//function to check winner if any
-export function checkWinner(board: any[], winningLines: any[][]) {
-    let winner = "", winningLine = [];
-    for (let line of winningLines) {
-        var xWon = true;
-        var oWon = true;
-        for (let index of line) {
-            if (board[index] == "X") {
-                continue;
-            }
-            else {
-                xWon = false;
-                break;
-            }
-        }
-        for (let index of line) {
-            if (board[index] == "O") {
-                continue;
-            }
-            else {
-                oWon = false;
-                break;
-            }
-        }
-
-        if (xWon) { winner = "X"; winningLine = line; }
-        if (oWon) { winner = "O"; winningLine = line; }
-    }
-    return {winner, winningLine};
 }
 
 export function generateWinningLines(input: number) {
-    const array = new Array(input * input).fill(0).map((_, i) => i)
-    let res: any[][];
-    let horizontalWin = [];
-    let verticalWin = [];
-    let diagonalWin45 = [];
-    let diagonalWin135 = [];
-    
-    for (let i = 0; i < input * input; i += input) {
-        let lineRow = array.slice(i, i + input)
-        horizontalWin.push(lineRow)
+    if (input == 3) {
+        return helper3.allPossibleWin3x3();
     }
-
-    for (let i = 0; i < input; i += 1) {
-        var lineCol = []
-        for (let j = i; j < input * input; j += input) {
-            lineCol.push(j)
-        }
-        verticalWin.push(lineCol)
-
-        var lineDiag45 = []
-        if (i == 0) {
-            for (let k = i; k < input * input; k += (input + 1)) {
-                lineDiag45.push(k)
-            }
-            diagonalWin45.push(lineDiag45)
-        }
-
-        var lineDiag135 = []
-        if (i == input - 1) {
-            for (let k = i; k <= input * (input - 1); k += i) {
-                lineDiag135.push(k)
-            }
-            diagonalWin135.push(lineDiag135)
-        }
+    else {
+        return helper5.allPossibleWin5x5();
     }
-
-    res = [...horizontalWin, ...verticalWin, ...diagonalWin45, ...diagonalWin135]
-    return [res, horizontalWin, verticalWin, diagonalWin45, diagonalWin135];
 }
 
 export function containWin(array2d: number[][], winningLine: number[]) {
