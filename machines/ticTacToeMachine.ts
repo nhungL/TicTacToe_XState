@@ -74,16 +74,18 @@ export const ticTacToeMachine =
           ]
         },
         OTurn: {
-          always: [
-            {
-              cond: "checkWin",
-              target: "winner",
-            },
-            {
-              cond: "checkDraw",
-              target: "draw",
-            },
-          ],
+          after: {
+            50:[
+              {
+                cond: "checkWin",
+                target: "winner",
+              },
+              {
+                cond: "checkDraw",
+                target: "draw",
+              },
+            ],
+          },
           on: {
             PLAY: {
               actions: "updateBoard",
@@ -112,13 +114,13 @@ export const ticTacToeMachine =
       actions: {
         assignSize: ticTacToeModel.assign({
           size: (ctx, event: AnyEventObject) => {
-            console.log("in update size board", { event });
+            // console.log("in update size board", { event });
             return ctx.size = event.value
           },
         }),
         initialBoard: ticTacToeModel.assign({
           board: (ctx) => {
-            console.log("in initialize board");
+            // console.log("in initialize board");
             let initialBoard = Array(ctx.size * ctx.size).fill("");
             return ctx.board = initialBoard;
           },
@@ -133,16 +135,25 @@ export const ticTacToeMachine =
           board: (ctx, event: AnyEventObject) => {
             const updatedBoard = [...ctx.board];
             if (ctx.player == "O") {
+              console.log("PLAYER O: ", event.value);
               updatedBoard[event.value] = ctx.player;
             }
             else {
               console.log("FIND MOVE FOR X")
-              let idx = bestMove(ctx.board, ctx.winningLines);
-              if (idx != null && updatedBoard[idx] == '') {
-                updatedBoard[idx] = ctx.player;
+              //first move always be [0][0]
+              if (ctx.board[0] == "") {
+                updatedBoard[0] = ctx.player;
+              }
+              else {
+                let res = bestMove(ctx.board);
+                res.then((idx) => {
+                  if (idx != null && updatedBoard[idx] == '')
+                    updatedBoard[idx] = ctx.player;
+                })
               }
             }
-            return updatedBoard;
+            console.log({ updatedBoard })
+            return ctx.board = updatedBoard;
           },
           moves: (ctx) => ctx.moves + 1,
           player: (ctx) => (ctx.player === "X" ? "O" : "X")
@@ -159,24 +170,19 @@ export const ticTacToeMachine =
           winningLines: (ctx) => {
             return ctx.winningLines = generateWinningLines(ctx.size)[0]
           },
-          moves: (ctx) => {
-            console.log(ctx);
-            return ctx.moves = 0;
-          },
-          winner: (ctx) => {
-            return ctx.winner = "";
-          },
-          player: (ctx) => "X",
+          moves: (ctx) => (ctx.moves = 0),
+          winner: (ctx) => (ctx.winner = ""),
+          player: (ctx) => (ctx.player = "X"),
         }),
         resetGame: ticTacToeModel.assign(ticTacToeModel.initialContext),
         setWinner: ticTacToeModel.assign({
           winner: (ctx) => (
-            ctx.player === "X" ? "O" : "X"
+            ctx.player = checkWinner(ctx.board).winner
           ),
         }),
         setWinningLine: ticTacToeModel.assign({
           winning: (ctx) => {
-            var res = checkWinner(ctx.board, ctx.winningLines);
+            var res = checkWinner(ctx.board);
             return ctx.winning = res.winningLine
           }
         })
@@ -184,11 +190,11 @@ export const ticTacToeMachine =
       guards: {
         checkWin: (ctx) => {
           console.log("check win")
-          return checkWinner(ctx.board, ctx.winningLines).winner != "";
+          return checkWinner(ctx.board).winner == "X" || checkWinner(ctx.board).winner == "O";
         },
         checkDraw: (ctx) => {
           console.log("check draw")
-          return ctx.moves === ctx.board.length;
+          return checkWinner(ctx.board).winner == "tie";
         },
         isValidMove: (ctx, event: AnyEventObject) => {
           console.log("check valid move")
