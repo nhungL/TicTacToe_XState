@@ -36,7 +36,7 @@ export const Board = () => {
     return state.context.size;
   });
 
-  const renderBoard = helper.range(0, boardSize).map((i) => {
+  const renderBoard = helper.range(size, boardSize).map((i) => {
     return (
       <Square
         key={i}
