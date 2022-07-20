@@ -54,6 +54,7 @@ export const StyledWaitingPlayout = styled.div`
 
   .display-select {
     display: flex;
+    justify-content: center;
   }
 
   .select-wrap {
@@ -65,6 +66,7 @@ export const StyledWaitingPlayout = styled.div`
   }
 
   .smallTitle {
+    padding: 0 1rem;
     border-top: 2px solid #680000;
     border-bottom: 2px solid #680000;
     box-shadow: inset 0 0 20px 15px #89593654;

@@ -39,7 +39,7 @@ export const WaitingLayout = () => {
             ></StyledInput>
           </div>
 
-          <div className="select-wrap">
+          {/* <div className="select-wrap">
             <label className="label" htmlFor="5x5">
               5x5
             </label>
@@ -49,7 +49,7 @@ export const WaitingLayout = () => {
               id="5x5"
               onClick={() => assignSize(5)}
             ></StyledInput>
-          </div>
+          </div> */}
         </div>
         <br />
         <div>
