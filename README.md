@@ -1,3 +1,3 @@
 <h1> Tic-Tac-Toe </h1>
 
-<a href="#" class="button pill">Play </a>
+<button class="button" type="submit">Post comment (button)</button>
