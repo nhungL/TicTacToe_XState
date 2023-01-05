@@ -1,3 +1,3 @@
 <h1> Tic-Tac-Toe </h1>
 
-<button class="button" type="submit">Post comment (button)</button>
+[Post comment] (https://tic-tac-toe-xs-tate.vercel.app/)
