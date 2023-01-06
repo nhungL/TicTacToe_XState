@@ -5,5 +5,5 @@
 * Coming: 5x5 with AI player 🙌
 
 <a href="https://tic-tac-toe-xs-tate.vercel.app/"> 
-  <button class="btn btn-primary"> PLAY </button>
+  <button class="btn btn-primary" type="submit"> PLAY </button>
 </a>
